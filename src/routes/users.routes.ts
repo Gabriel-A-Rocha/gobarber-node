@@ -30,7 +30,7 @@ usersRouter.post("/", async (request, response) => {
     return response.json(user);
   } catch (err) {
     //caso occora um erro durante a criação
-    return response.status(400).json({ error: err.message });
+    return response.status(err.statusCode).json({ error: err.message });
   }
 });
 

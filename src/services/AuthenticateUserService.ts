@@ -3,6 +3,8 @@ import { compare } from "bcryptjs";
 import { sign } from "jsonwebtoken";
 import authConfig from "../config/auth";
 
+import AppError from "../errors/AppError";
+
 import User from "../models/User";
 import { response } from "express";
 
@@ -26,13 +28,13 @@ class AuthenticateUserService {
     });
     //caso o email esteja cadastrado no banco
     if (!user) {
-      throw new Error("Incorrect email/password combination");
+      throw new AppError("Incorrect email/password combination", 401);
     }
     //verificar se a senha é válida
     const passwordMatched = await compare(password, user.password);
     //caso a senha esteja incorreta
     if (!passwordMatched) {
-      throw new Error("Incorrect email/password combination");
+      throw new AppError("Incorrect email/password combination", 401);
     }
 
     //USUÁRIO AUTENTICADO - gerar o token
