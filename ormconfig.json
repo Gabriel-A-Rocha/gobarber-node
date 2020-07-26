@@ -9,5 +9,8 @@
   "cli": {
     "migrationsDir": "./src/database/migrations"
   },
-  "entities": ["./src/models/*.ts"]
+  "entities": [
+    "./src/modules/appointments/infra/typeorm/entities/Appointment.ts",
+    "./src/modules/users/infra/typeorm/entities/User.ts"
+  ]
 }

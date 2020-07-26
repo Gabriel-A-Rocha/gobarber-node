@@ -5,11 +5,11 @@ import "express-async-errors";
 import cors from "cors";
 
 import routes from "./routes/index";
-import uploadConfig from "../../../config/upload";
-import AppError from "../../errors/AppError";
+import uploadConfig from "@config/upload";
+import AppError from "@shared/errors/AppError";
 
 //importar a conexão com o postgres
-import "../typeorm/index";
+import "@shared/infra/typeorm/index";
 
 const app = express();
 

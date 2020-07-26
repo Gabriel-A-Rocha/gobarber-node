@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import AuthenticateUserService from "../../../../modules/users/services/AuthenticateUserService";
+import AuthenticateUserService from "@modules/users/services/AuthenticateUserService";
 
 //criação de um objeto 'router', que tratará das rotas da sessão do usuário
 const sessionsRouter = Router();
