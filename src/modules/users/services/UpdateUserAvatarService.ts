@@ -1,43 +1,43 @@
-import { getRepository } from "typeorm";
-import path from "path";
-import fs from "fs";
+import { getRepository } from 'typeorm';
+import path from 'path';
+import fs from 'fs';
 
-import AppError from "@shared/errors/AppError";
+import AppError from '@shared/errors/AppError';
 
-import uploadConfig from "@config/upload";
-import User from "@modules/users/infra/typeorm/entities/User";
+import uploadConfig from '@config/upload';
+import User from '@modules/users/infra/typeorm/entities/User';
+import IUsersRepository from '../repositories/IUsersRepository';
 
-interface Request {
+interface IRequest {
   user_id: string;
   avatarFilename: string;
 }
 
 class UpdateUserAvatarService {
-  public async execute({ user_id, avatarFilename }: Request): Promise<User> {
-    //utilizar repositório padrão do TypeORM para gerenciar a tabela de usuários
-    const usersRepository = getRepository(User);
-    //validar as informações do usuário
-    const user = await usersRepository.findOne(user_id);
-    //caso o usuário não tenha sido encontrado no banco
+  constructor(private usersRepository: IUsersRepository) {}
+
+  public async execute({ user_id, avatarFilename }: IRequest): Promise<User> {
+    const user = await this.usersRepository.findById(user_id);
+
     if (!user) {
-      throw new AppError("Only authenticated users can change avatar.", 401);
+      throw new AppError('Only authenticated users can change avatar.', 401);
     }
-    //caso o usuário já tenha um avatar
+
     if (user.avatar) {
-      //montar o caminho do arquivo
+      // assemble the file path
       const userAvatarFilePath = path.join(uploadConfig.directory, user.avatar);
-      //a função stat só tratá retorno se o arquivo existir
+      // check if the avatar file exists
       const userAvatarFileExists = await fs.promises.stat(userAvatarFilePath);
-      //deletar o avatar antigo
+      // delete previous avatar
       if (userAvatarFileExists) {
         await fs.promises.unlink(userAvatarFilePath);
       }
     }
-    //atualizar o campo com o nome do novo arquivo
+    // update file name
     user.avatar = avatarFilename;
-    //salvar (atualizar) a informação no banco
-    await usersRepository.save(user);
-    //retornar o usuário atualizado
+    // save new avatar to database
+    await this.usersRepository.save(user);
+
     return user;
   }
 }
