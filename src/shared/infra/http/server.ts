@@ -10,6 +10,8 @@ import AppError from '@shared/errors/AppError';
 
 // establish connection with postgres
 import '@shared/infra/typeorm/index';
+// map all the dependency injections
+import '@shared/container/index';
 
 const app = express();
 

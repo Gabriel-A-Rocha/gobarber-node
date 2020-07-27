@@ -12,9 +12,7 @@ class AppointmentsRepository implements IAppointmentsRepository {
     this.ormRepository = getRepository(Appointment);
   }
 
-  //função de busca customizada
   public async findByDate(date: Date): Promise<Appointment | undefined> {
-    //o 'await' garante que a operação irá finalizar antes de prosseguir com o código
     const findAppointment = await this.ormRepository.findOne({
       where: { date: date },
     });
