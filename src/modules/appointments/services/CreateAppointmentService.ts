@@ -1,37 +1,35 @@
-import { startOfHour } from "date-fns";
-import { getCustomRepository } from "typeorm";
+import { startOfHour } from 'date-fns';
 
-import AppError from "@shared/errors/AppError";
+import AppError from '@shared/errors/AppError';
 
-import Appointment from "@modules/appointments/infra/typeorm/entities/Appointment";
-import AppointmentsRepository from "@modules/appointments/repositories/AppointmentsRepository";
+import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
+import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository';
 
-interface Request {
+interface IRequest {
   provider_id: string;
   date: Date;
 }
 
 class CreateAppointmentService {
-  public async execute({ provider_id, date }: Request): Promise<Appointment> {
-    //obter a referência do repositório de agendamentos
-    const appointmentsRepository = getCustomRepository(AppointmentsRepository);
+  constructor(private appointmentsRepository: IAppointmentsRepository) {}
+
+  public async execute({ provider_id, date }: IRequest): Promise<Appointment> {
     //arredondamento do horário
     const appointmentDate = startOfHour(date);
     //verificar se já existe agendamento no horário desejado
-    const findAppointmentInSameDate = await appointmentsRepository.findByDate(
-      appointmentDate
+    const findAppointmentInSameDate = await this.appointmentsRepository.findByDate(
+      appointmentDate,
     );
     //retorno de erro caso horário esteja ocupado
     if (findAppointmentInSameDate) {
-      throw new AppError("This appointment is already booked.");
+      throw new AppError('This appointment is already booked.');
     }
     //criar o agendamento
-    const appointment = appointmentsRepository.create({
-      provider_id: provider_id,
+    const appointment = await this.appointmentsRepository.create({
+      provider_id,
       date: appointmentDate,
     });
-    //armazenar no banco de dados
-    await appointmentsRepository.save(appointment);
+
     //retornar o agendamento cadastrado
     return appointment;
   }
