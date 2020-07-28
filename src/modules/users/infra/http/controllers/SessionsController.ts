@@ -4,7 +4,7 @@ import { container } from 'tsyringe';
 import AuthenticateUserService from '@modules/users/services/AuthenticateUserService';
 
 class SessionsController {
-  // creates a new session and provides the valid token
+  // creates a new session and provides a valid token
   public async create(request: Request, response: Response): Promise<Response> {
     const { email, password } = request.body;
 
