@@ -1,8 +1,6 @@
-import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository';
 import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
-//import User from '@modules/users/infra/typeorm/entities/User';
 import IUsersRepository from '../repositories/IUsersRepository';
 import IMailProvider from '@shared/container/providers/MailProvider/models/IMailProvider';
 import IUserTokensRepository from '../repositories/IUserTokensRepository';
