@@ -18,11 +18,11 @@ class SendForgotPasswordEmailService {
     @inject('UserTokensRepository')
     private userTokensRepository: IUserTokensRepository,
 
-    //@inject('MailProvider')
+    @inject('MailProvider')
     private mailProvider: IMailProvider,
   ) {}
 
-  public async execute({ email }: IRequest): Promise<void> {
+  public async execute(email: string): Promise<void> {
     const user = await this.usersRepository.findByEmail(email);
 
     if (!user) {
@@ -31,7 +31,7 @@ class SendForgotPasswordEmailService {
 
     await this.userTokensRepository.generate(user.id);
 
-    this.mailProvider.sendMail(
+    await this.mailProvider.sendMail(
       email,
       'Pedido de recuperação de senha recebido',
     );

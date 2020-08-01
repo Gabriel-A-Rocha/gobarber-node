@@ -1,5 +1,4 @@
 import { getRepository, Repository } from 'typeorm';
-import { injectable } from 'tsyringe';
 
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';

@@ -10,7 +10,7 @@
     "migrationsDir": "./src/shared/infra/typeorm/migrations"
   },
   "entities": [
-    "./src/modules/appointments/infra/typeorm/entities/Appointment.ts",
-    "./src/modules/users/infra/typeorm/entities/User.ts"
+    "./src/modules/appointments/infra/typeorm/entities/*.ts",
+    "./src/modules/users/infra/typeorm/entities/*.ts"
   ]
 }

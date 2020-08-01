@@ -18,7 +18,8 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use('/files', express.static(uploadConfig.tmpFolder));
+// serve avatar files
+app.use('/files', express.static(uploadConfig.uploadsFolder));
 app.use(routes);
 
 app.use(
