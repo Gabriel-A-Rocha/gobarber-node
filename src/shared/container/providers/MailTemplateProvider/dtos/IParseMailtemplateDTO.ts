@@ -4,7 +4,7 @@ interface ITemplateVariables {
 
 interface IParseMailTemplateDTO {
   // HTML page
-  template: string;
+  file: string;
   // dynamic data (e.g., user name)
   variables: ITemplateVariables;
 }
