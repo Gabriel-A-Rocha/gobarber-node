@@ -1,10 +1,10 @@
-import { Request, Response, NextFunction } from "express";
-import { verify } from "jsonwebtoken";
+import { Request, Response, NextFunction } from 'express';
+import { verify } from 'jsonwebtoken';
 
-import authConfig from "@config/auth";
-import AppError from "@shared/errors/AppError";
+import authConfig from '@config/auth';
+import AppError from '@shared/errors/AppError';
 
-interface TokenPayload {
+interface ITokenPayload {
   iat: number;
   exp: number;
   sub: string;
@@ -13,31 +13,34 @@ interface TokenPayload {
 export default function ensureAuthenticated(
   request: Request,
   response: Response,
-  next: NextFunction
+  next: NextFunction,
 ): void {
-  //validação do token JWT
+  // receive bearer token information
   const authHeader = request.headers.authorization;
-  //caso não haja token na request
+  // deny authentication if authorization header is empty
   if (!authHeader) {
-    throw new AppError("JWT token is missing.", 401);
+    throw new AppError('JWT token is missing.', 401);
   }
-  //parsear o token (formato: "Bearer token")
-  const [type, token] = authHeader.split(" ");
+  // split header to to pick only the token info (format: "Bearer token")
+  const [type, token] = authHeader.split(' ');
 
   try {
-    //resgatar o segredo e o prazo data de expiração do token
+    // retrieve secret and token's expiry date
     const { secret, expiresIn } = authConfig.jwt;
-    //verificar se o token corresponde ao armazenado no banco
+    // check token's validity
     const decoded = verify(token, secret);
-    //forçar a tipagem da variável 'decoded'
-    const { sub } = decoded as TokenPayload;
-    //anexar a id do usuário na request (@types/express.d.ts)
+    // force response type as ITokenPalyload
+    const { sub } = decoded as ITokenPayload;
+    // attach user id to the request (@types/express.d.ts)
     request.user = {
       id: sub,
     };
+    // green light for the user to proceed
+    console.log(`\nUser ID ${sub} is authenticated.`);
 
     return next();
   } catch {
-    throw new AppError("Invalid JWT token.", 401);
+    // handle unexpected errors
+    throw new AppError('Invalid JWT token.', 401);
   }
 }

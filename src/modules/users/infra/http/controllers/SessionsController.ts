@@ -7,6 +7,8 @@ class SessionsController {
   // creates a new session and provides a valid token
   public async create(request: Request, response: Response): Promise<Response> {
     const { email, password } = request.body;
+    console.log('\nSessionsController - request.body');
+    console.log(request.body);
 
     const authenticateUser = container.resolve(AuthenticateUserService);
 
