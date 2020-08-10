@@ -6,7 +6,7 @@ import ShowProfileService from '@modules/users/services/ShowProfileService';
 
 class ProfileController {
   public async show(request: Request, response: Response): Promise<Response> {
-    // display user profile
+    // user id is attached to the request for authenticated users
     const user_id = request.user.id;
 
     const showProfile = container.resolve(ShowProfileService);
@@ -19,14 +19,9 @@ class ProfileController {
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
-    // only authenticated users can update the profile
+    // user id is attached to the request for authenticated users
     const user_id = request.user.id;
-
     const { name, email, old_password, password } = request.body;
-
-    console.log('ProfileController - update method - request.body');
-    console.log(request.body);
-
     // instantiate service, applying dependency injection
     const updateProfile = container.resolve(UpdateProfileService);
 
