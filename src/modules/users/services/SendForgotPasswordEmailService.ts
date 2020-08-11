@@ -24,8 +24,6 @@ class SendForgotPasswordEmailService {
   ) {}
 
   public async execute({ email }: IRequest): Promise<void> {
-    console.log(email);
-
     const user = await this.usersRepository.findByEmail(email);
 
     if (!user) {

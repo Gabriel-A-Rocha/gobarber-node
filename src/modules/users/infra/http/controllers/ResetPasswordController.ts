@@ -7,9 +7,6 @@ class ResetPasswordController {
   public async create(request: Request, response: Response): Promise<Response> {
     const { password, token } = request.body;
 
-    console.log('\nResetPasswordController - request.body');
-    console.log(request.body);
-
     // dependency injection for the service
     const resetPassword = container.resolve(ResetPasswordService);
 

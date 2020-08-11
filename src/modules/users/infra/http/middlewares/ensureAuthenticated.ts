@@ -36,7 +36,7 @@ export default function ensureAuthenticated(
       id: sub,
     };
     // green light for the user to proceed
-    console.log(`\nUser ID ${sub} is authenticated.`);
+    //console.log(`\nUser ID ${sub} is authenticated.`);
 
     return next();
   } catch {

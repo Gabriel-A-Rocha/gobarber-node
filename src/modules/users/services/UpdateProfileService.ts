@@ -31,15 +31,6 @@ class UpdateProfileService {
     password,
     old_password,
   }: IRequest): Promise<User> {
-    console.log('\nUpdateProfileService - information provided');
-    console.log({
-      user_id,
-      name,
-      email,
-      password,
-      old_password,
-    });
-
     const verifyEmailProvided = await this.usersRepository.findByEmail(email);
     // verify if email exists in the database and it is not from the requestor (intention to update other info)
     if (verifyEmailProvided && verifyEmailProvided.id !== user_id) {
@@ -75,9 +66,6 @@ class UpdateProfileService {
     }
 
     await this.usersRepository.save(user);
-
-    console.log('\nUpdateProfileService - information updated');
-    console.log(user);
 
     return user;
   }

@@ -12,9 +12,6 @@ class ProvidersController {
 
     const providers = await listProviders.execute({ user_id });
 
-    console.log('Retornou do serviço');
-    console.log(providers);
-
     return response.json(providers);
   }
 }
