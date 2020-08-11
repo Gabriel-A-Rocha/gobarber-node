@@ -17,11 +17,15 @@ class Appointment {
 
   @Column()
   provider_id: string;
-
-  //muitos agendamentos podem ser feitos por um barbeiro
   @ManyToOne(() => User)
   @JoinColumn({ name: 'provider_id' })
   provider: User;
+
+  @Column()
+  user_id: string;
+  @ManyToOne(() => User)
+  @JoinColumn({ name: 'user_id' })
+  user: User;
 
   @Column('time with time zone')
   date: Date;
