@@ -47,7 +47,7 @@ describe('CreateAppointment', () => {
       createAppointment.execute({
         date: appointmentDate,
         provider_id: 'providerId',
-        user_id: 'userId',
+        user_id: 'userId2',
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
