@@ -25,6 +25,7 @@ class ResetPasswordService {
   ) {}
 
   public async execute({ token, password }: IRequest): Promise<void> {
+    // identify user associated with the token provided
     const userToken = await this.userTokensRepository.findByToken(token);
 
     if (!userToken) {
@@ -40,6 +41,7 @@ class ResetPasswordService {
     const tokenCreatedAt = userToken.created_at;
     const compareDate = addHours(tokenCreatedAt, 2);
 
+    // check token's validity
     if (isAfter(Date.now(), compareDate)) {
       throw new AppError('Expired token.');
     }
