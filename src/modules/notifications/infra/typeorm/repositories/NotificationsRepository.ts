@@ -1,6 +1,5 @@
 import { MongoRepository, getMongoRepository } from 'typeorm';
 
-import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
 import INotificationsRepository from '@modules/notifications/repositories/INotificationsRepository';
 import ICreateNotificationDTO from '@modules/notifications/dtos/ICreateNotificationDTO';
 import Notification from '../schemas/Notification';

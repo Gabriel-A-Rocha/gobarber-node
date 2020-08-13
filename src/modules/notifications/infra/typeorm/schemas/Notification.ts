@@ -7,6 +7,8 @@ import {
   ObjectIdColumn,
 } from 'typeorm';
 
+// TypeORM documentation for MongoDB entities can be found at: https://typeorm.io/#/mongodb
+
 @Entity('notifications')
 class Notification {
   @ObjectIdColumn()
