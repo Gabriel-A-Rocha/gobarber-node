@@ -25,7 +25,7 @@ export default function ensureAuthenticated(
   const [type, token] = authHeader.split(' ');
 
   try {
-    // retrieve secret and token's expiry date
+    // retrieve token's secret and expiry date
     const { secret, expiresIn } = authConfig.jwt;
     // check token's validity
     const decoded = verify(token, secret);
