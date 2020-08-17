@@ -9,15 +9,16 @@ class AppointmentsController {
     const { provider_id, date } = request.body;
     // retrieve user id from the custom field created to register logged users
     const user_id = request.user.id;
+
     // format date from 'string' do 'Date'
-    const parsedDate = parseISO(date);
+    //const parsedDate = parseISO(date);
 
     const createAppointment = container.resolve(CreateAppointmentService);
 
     const appointment = await createAppointment.execute({
       provider_id,
       user_id,
-      date: parsedDate,
+      date,
     });
 
     return response.json(appointment);
