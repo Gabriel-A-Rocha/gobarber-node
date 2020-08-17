@@ -27,8 +27,13 @@ export default function ensureAuthenticated(
   try {
     // retrieve token's secret and expiry date
     const { secret, expiresIn } = authConfig.jwt;
+
+    if (!secret) {
+      throw new AppError('User could not be authenticated', 401);
+    }
     // check token's validity
     const decoded = verify(token, secret);
+
     // force response type as ITokenPalyload
     const { sub } = decoded as ITokenPayload;
     // attach user id to the request (@types/express.d.ts)

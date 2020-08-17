@@ -9,11 +9,11 @@ class UserAvatarController {
     const updateUserAvatar = container.resolve(UpdateUserAvatarService);
 
     const user = await updateUserAvatar.execute({
+      // user id provided by the authentication middleware
       user_id: request.user.id,
+      // filename provided by the multer middleware
       avatarFilename: request.file.filename,
     });
-    // do not display password information in the return
-    delete user.password;
 
     return response.json(classToClass(user));
   }
