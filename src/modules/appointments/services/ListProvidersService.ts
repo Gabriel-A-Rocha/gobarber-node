@@ -29,7 +29,7 @@ class ListProvidersService {
         except_user_id: user_id,
       });
 
-      console.log('A query no banco foi feita.');
+      console.log('Postgres has been accessed to list providers.');
 
       await this.cacheProvider.save(`providers-list:${user_id}`, users);
     }
