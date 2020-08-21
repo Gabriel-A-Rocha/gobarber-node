@@ -3,6 +3,7 @@ import IAppointmentsRepository from '../repositories/IAppointmentsRepository';
 import Appointment from '../infra/typeorm/entities/Appointment';
 import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 import RedisCacheProvider from '@shared/container/providers/CacheProvider/implementations/RedisCacheProvider';
+import { classToClass } from 'class-transformer';
 
 interface IRequest {
   provider_id: string;
@@ -30,11 +31,11 @@ class ListProviderAppointmentsService {
   }: IRequest): Promise<Appointment[]> {
     const cacheKey = `provider-appointments:${provider_id}:${year}-${month}-${day}`;
 
-    /*  let appointments = await this.cacheProvider.recover<Appointment[]>(
+    let appointments = await this.cacheProvider.recover<Appointment[]>(
       cacheKey,
-    ); */
+    );
 
-    let appointments;
+    // let appointments;
 
     // if no cache was found, retrieve it from the SQL database
     if (!appointments) {
@@ -47,7 +48,7 @@ class ListProviderAppointmentsService {
         },
       );
 
-      await this.cacheProvider.save(cacheKey, appointments);
+      await this.cacheProvider.save(cacheKey, classToClass(appointments));
     }
 
     return appointments;
