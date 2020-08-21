@@ -9,8 +9,7 @@ class ProviderMonthAvailabilityController {
   public async index(request: Request, response: Response): Promise<Response> {
     // provider id is sent in the route: 'providers/:provider_id/month-availability',
     const { provider_id } = request.params;
-
-    const { month, year } = request.body;
+    const { month, year } = request.query;
 
     console.log(provider_id, month, year);
 
@@ -21,8 +20,8 @@ class ProviderMonthAvailabilityController {
     const monthAvailability = await listProviderMonthAvailabilityService.execute(
       {
         provider_id,
-        month,
-        year,
+        month: Number(month),
+        year: Number(year),
       },
     );
 

@@ -9,8 +9,7 @@ class ProviderDayAvailabilityController {
   public async index(request: Request, response: Response): Promise<Response> {
     // provider_id is retrieved from the route: '/providers/:provider_id/day-availability'
     const { provider_id } = request.params;
-
-    const { day, month, year } = request.body;
+    const { day, month, year } = request.query;
 
     const listProviderDayAvailabilityService = container.resolve(
       ListProviderDayAvailabilityService,
@@ -18,9 +17,9 @@ class ProviderDayAvailabilityController {
 
     const dayAvailability = await listProviderDayAvailabilityService.execute({
       provider_id,
-      day,
-      month,
-      year,
+      day: Number(day),
+      month: Number(month),
+      year: Number(year),
     });
 
     return response.json(dayAvailability);
