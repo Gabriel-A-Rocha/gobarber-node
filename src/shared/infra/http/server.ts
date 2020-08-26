@@ -21,10 +21,12 @@ import '@shared/container/index';
 const app = express();
 
 app.use(cors());
-app.use(rateLimiter);
 app.use(express.json());
 // serve avatar files
 app.use('/files', express.static(uploadConfig.uploadsFolder));
+// rate limiter must be after the static files use
+app.use(rateLimiter);
+
 app.use(routes);
 
 app.use(errors());
