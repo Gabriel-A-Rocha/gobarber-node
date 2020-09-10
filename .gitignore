@@ -9,4 +9,3 @@ ormconfig.json
 dist
 tmp/*
 !tmp/.gitkeep
-README.md
